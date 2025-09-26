@@ -1,0 +1,17 @@
+#ansible-playbook run-xr-command.yaml -i static.yaml --extra-vars="command='show version'"
+#ansible-playbook run-xr-command.yaml -i iag_inventory.py --extra-vars="command='show version'"
+---
+- connection: local
+  gather_facts: no
+  hosts: all
+
+  tasks:
+
+    - name: RUN COMMAND
+      register: result
+      iosxr_command:
+        commands:
+          - command: "{{ command }}"
+
+    - name: Result of Run Command
+      debug: var=result
